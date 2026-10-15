@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/main-game.css">
+    <link rel="stylesheet" href="/materialize.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USHLE</title>
+</head>
+<body>
+    <div id="topbar">
+        <h1 id="title">USHLE</h1>
+        
+        <form method="POST" action="./play" id="myForm">
+            <div class="input-field">
+                <input autocomplete="off" class="autocomplete" name="president" list="presidents" placeholder="Guess the president" id="guessbar">
+            </div>
+            <input type="hidden" name="randPerson" value=<%=randPerson%>>
+            <input type="hidden" name="hintlock" value=<%=hint%>>
+            <input type="hidden" name="hist" value="<%=JSON.stringify(hist)%>">
+            <button id="guessbutton">Guess!</button>
+        </form>
+        <%let hintOut = "";%>
+        <%if (hint >= 50) {%>
+            <%hintOut = data[randPerson]["event"] + " / "+data[randPerson]["act"];%>
+        <%} else {%>
+            <%hintOut = data[randPerson]["fact"];%>
+        <%}%>
+        <div id="pair">
+            <button id="helpbutton">help/directions</button>
+            <button id="hint" data-text="<%=hintOut%>" onclick="">hint</button>
+        </div>
+    </div>
+    <div id="guesses-outer">
+        <div class="row" id="label">
+            <div class="column">name</div>
+            <div class="column">decade</div>
+            <div class="column">era</div>
+            <div class="column">conflict</div>
+            <div class="column">party</div>
+            <div class="column"># years</div>
+        </div>
+        <% for (let i=0; i<hist.length; i++) {%>
+        <div class="row rowguess" id="yourGuess">
+            <%if (hist[i]["Name"] == pres_names[randPerson]){%>
+                <div class="correct column firstC"><button data-act = "<%=hist[i]["act"]%> -- <%=hist[i]["DefM"]%>" data-event="<%=hist[i]["event"]%> -- <%=hist[i]["DefE"]%>" class="nameInfo"><%=hist[i]["Name"]%></button></div> <!--doesn't change until correct-->
+            <%} else {%>
+                <div class="column firstC"><button data-act = "<%=hist[i]["act"]%> -- <%=hist[i]["DefM"]%>" data-event="<%=hist[i]["event"]%> -- <%=hist[i]["DefE"]%>" class="nameInfo"><%=hist[i]["Name"]%></button></div>
+            <%}%>
+            
+            <%if (hist[i]["Decade of First Inauguration"] == data[randPerson]["Decade of First Inauguration"]) {%>
+                <div class="correct column"><%=hist[i]["Decade of First Inauguration"]%></div>
+            <%}else if (Math.abs(+hist[i]["Decade of First Inauguration"]- +data[randPerson]["Decade of First Inauguration"]) <= 30) {%>
+                <div class="almost column"><%=hist[i]["Decade of First Inauguration"]%></div>
+            <%}else{%>
+                <div class="column"><%=hist[i]["Decade of First Inauguration"]%></div>
+            <%}%>
+            
+            <%if (hist[i]["Historical Era"] == data[randPerson]["Historical Era"]) {%>
+                <div class="correct column"><%=hist[i]["Historical Era"]%></div>
+            <%}else{%>
+                <div class="column"><%=hist[i]["Historical Era"]%></div>
+            <%}%>
+            
+            <%if (hist[i]["Associated Major Conflict"] == data[randPerson]["Associated Major Conflict"]) {%>
+                <div class="correct column"><%=hist[i]["Associated Major Conflict"]%></div>
+            <%}else{%>
+                <div class="column"><%=hist[i]["Associated Major Conflict"]%></div>
+            <%}%>
+
+            <%if (hist[i]["Political Party"] == data[randPerson]["Political Party"]) {%>
+                <div class="correct column"><%=hist[i]["Political Party"]%></div>
+            <%}else{%>
+                <div class="column"><%=hist[i]["Political Party"]%></div>
+            <%}%>
+
+            <%if (hist[i]["Years Served"] == data[randPerson]["Years Served"]) {%>
+                <div class="correct column"><%=hist[i]["Years Served"]%></div>
+            <%}else if (Math.abs(+hist[i]["Years Served"]- +data[randPerson]["Years Served"]) <= 2) {%>
+                <div class="almost column"><%=hist[i]["Years Served"]%></div>
+            <%}else{%>
+                <div class="column"><%=hist[i]["Years Served"]%></div>
+            <%}%>
+            
+        </div>
+        <%}%>
+        
+    </div>
+    <%if (status > 0) {%>
+    <div id="win-modal" class="modal-win">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <%if (status == 2) {%>
+            <p class="name-info-text">You win!!! The correct answer was <%=pres_names[randPerson]%></p>
+            <%}else{%>
+            <p class="name-info-text">The correct answer was <%=pres_names[randPerson]%></p>
+            <%}%>
+            <br>
+            <p>Major event: <%=data[randPerson]["event"]%> -- <%=data[randPerson]["DefE"]%></p>
+            <br>
+            <p>Major act/policy/ruling: <%=data[randPerson]["act"]%> -- <%=data[randPerson]["DefM"]%></p>
+            <form action="./play" method="get"><button class="restart">PLAY AGAIN</button></form>
+        </div>
+    </div>
+    <form action="./play" method="get"><div class="center-content"><button class="restart">PLAY AGAIN</button></div></form>
+    <%}%>
+    <div id="name-modal" class="modalx"> <!--name, event/def, act/def-->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="name-info-text-name">a</h3>
+            <p class="name-info-text">Major event: </p>
+            <p id="name-info-text-e">a</p>
+            <p class="name-info-text">Major act/policy/ruling: </p>
+            <p id="name-info-text-a">a</p>
+        </div>
+    </div>
+    <div id="info-modal" class="modalx">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>How to play: <br><br>
+                Guess the president within 5 guesses using the given categories<br><br>
+                Decade: The decade in which a president started their presidential term<br><br>
+                Era: General historical era at the time of presidency<br><br>
+                Conflict: Potential ongoing armed/major conflict that the U.S. experienced at the time of presidency<br><br>
+                Party: The political party that the president was associated with<br><br>
+                # years: (Truncated) The number of years that a president was in office. <br><br>
+                Colors: Green indicates that an answer has the correct property for a certain category. Red indicates that it is close. <br><br>
+                If you are having a difficult time, you can use the hint button at the top. <br><br>
+                For more info about your guess, you can click on the name of the president. <br><br>
+                Otherwise, good luck!
+            </p>
+        </div>
+    </div>
+    <div id="hint-modal" class="modalx">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Hint: <%=hintOut%></p>
+        </div>
+    </div>
+    <div id="pres_names" data-name="<%=pres_names%>"></div>
+    <script src="events.js"></script>
+    <script src="/script.js"></script>
+    <script src="/materialize.js"></script>
+    
+    <%console.log(randPerson)%>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/landing-page.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USHLE</title>
+</head>
+<body>
+    <div id="land-content">
+        <h1>USHLE</h1>
+        <p>Try to Guess The President</p>
+        <form action="/play" method="get"><button id="playbutton">Play</button></form>
+        <p>by Brian</p>
+    </div>
+    <div id="help-c">
+        <button id="helpbutton">Help/Directions</button>
+    </div>
+    <div id="info-modal" class="modalx">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>How to play: <br><br>
+                Guess the president within 5 guesses using the given categories<br><br>
+                Decade: The decade in which a president started their presidential term<br><br>
+                Era: General historical era at the time of presidency<br><br>
+                Conflict: Potential ongoing armed/major conflict that the U.S. experienced at the time of presidency<br><br>
+                Party: The political party that the president was associated with<br><br>
+                # years: (Truncated) The number of years that a president was in office. <br><br>
+                Colors: Green indicates that an answer has the correct property for a certain category. Red indicates that it is close. <br><br>
+                If you are having a difficult time, you can use the hint button at the top. <br><br>
+                For more info about your guess, you can click on the name of the president. <br><br>
+                Otherwise, good luck!
+            </p>
+        </div>
+    </div>
+    <script src="/lp.js"></script>
+</body>
+</html>
