@@ -36,8 +36,6 @@ app.post("/play", (req, res) => {
     }
     let numguess = trackGuesses(gArray);
 
-    console.log(numguess);
-    console.log(listPres()[+req.body.randPerson] + req.body.president);
     if (listPres()[+req.body.randPerson] == nArray[nArray.length-1]) {
         win = 2; // win
     } else if (numguess >= 5 && listPres()[+req.body.randPerson] != nArray[nArray.length-1]) {
@@ -46,7 +44,6 @@ app.post("/play", (req, res) => {
         win = 0;
     }
     
-    console.log(win);
     res.render("main-game", {pres_names: listPres(), hist: gArray, 
         randPerson: +req.body.randPerson, data: records, status: win, hint:+req.body.hintlock});
 });

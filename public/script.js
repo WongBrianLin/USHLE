@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
   for (let i=1; i<=namesList.length; i++) {
     data1[namesList[i-1]] = null;
   }
-  console.log(namesList);
   function guessAuto() {
     form.requestSubmit();
   };

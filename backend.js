@@ -54,13 +54,13 @@ function returnPresObj(name) {
 }
 //listPres();
 //console.log(listPres());
-function initGuess() {
+/*function initGuess() {
     if (guess['Name'] == answer['Name']) {
         console.log("x");
     } else {
         categoryGuess();
     }
-}
+}*/
 
 function valGuess(x) {
     if (Number.isInteger(+x) && (+x>=0 && +x<=44)) {
@@ -72,7 +72,7 @@ function nearGuess(x) {
     
 }
 
-function categoryGuess() {
+/*function categoryGuess() {
     if (guess['Political Party'] == answer['Political Party']) {
         console.log("P. 1");
     } else {
@@ -100,7 +100,7 @@ function categoryGuess() {
     } else {
         console.log("Y. 0");
     }
-}
+}*/
 
 /*
 logic
